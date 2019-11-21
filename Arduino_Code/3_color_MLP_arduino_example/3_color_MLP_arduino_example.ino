@@ -1,6 +1,5 @@
-#include <Arduino.h>
-#include "emlearn/colorMLP.h"
-
+//#include <Arduino.h>
+#include "emlearn/test_cnn.h"
 #define     greenLed     5
 #define     redLed       6
 #define     blueLed      7
@@ -33,9 +32,9 @@ void loop()
 
 int predict(){
 
-    // Printing probability of all colors using the neural network
-    int error = eml_net_predict_proba(&colorMLP,&color_resp[0],3,&color_pred[0],6);
-    Serial.print("Pred: ");
+//    // Printing probability of all colors using the neural network
+     int error = eml_net_predict_proba(&test_cnn,color_resp,3,color_pred,6);
+     Serial.print("Pred: ");
     for (size_t i = 0; i < 6; i++)
     {
         Serial.print(color_pred[i]);
@@ -44,7 +43,7 @@ int predict(){
     Serial.print("\n\n");
 
     // Print the color with highest probability
-    int classColor = eml_net_predict(&colorMLP,&color_resp[0],3);
+    int classColor = eml_net_predict(&test_cnn,color_resp,3);
 
     if(classColor == 0){Serial.println("No color");}
     else if(classColor == 1){Serial.println("Color: Black");}
@@ -52,7 +51,6 @@ int predict(){
     else if(classColor == 3){Serial.println("Color: Yellow");}
     else if(classColor == 4){Serial.println("Color: LightBlue");}
     else if(classColor == 5){Serial.println("Color: Red");}
-
     Serial.println("-------------");
     return error;
 }
